@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.CartMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.po.Cart">
+    <id column="vCid" jdbcType="VARCHAR" property="vcid" />
+    <result column="vGoodsId" jdbcType="INTEGER" property="vgoodsid" />
+    <result column="mAmount" jdbcType="INTEGER" property="mamount" />
+    <result column="mSumMoney" jdbcType="INTEGER" property="msummoney" />
+    <result column="vUserId" jdbcType="VARCHAR" property="vuserid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    vCid, vGoodsId, mAmount, mSumMoney, vUserId
+  </sql>
+  <select id="selectByExample" parameterType="com.example.demo.po.CartCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sf_pc_cart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sf_pc_cart
+    where vCid = #{vcid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sf_pc_cart
+    where vCid = #{vcid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.po.CartCriteria">
+    delete from sf_pc_cart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.po.Cart">
+    insert into sf_pc_cart (vCid, vGoodsId, mAmount, 
+      mSumMoney, vUserId)
+    values (#{vcid,jdbcType=VARCHAR}, #{vgoodsid,jdbcType=INTEGER}, #{mamount,jdbcType=INTEGER}, 
+      #{msummoney,jdbcType=INTEGER}, #{vuserid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.po.Cart">
+    insert into sf_pc_cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vcid != null">
+        vCid,
+      </if>
+      <if test="vgoodsid != null">
+        vGoodsId,
+      </if>
+      <if test="mamount != null">
+        mAmount,
+      </if>
+      <if test="msummoney != null">
+        mSumMoney,
+      </if>
+      <if test="vuserid != null">
+        vUserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vcid != null">
+        #{vcid,jdbcType=VARCHAR},
+      </if>
+      <if test="vgoodsid != null">
+        #{vgoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="mamount != null">
+        #{mamount,jdbcType=INTEGER},
+      </if>
+      <if test="msummoney != null">
+        #{msummoney,jdbcType=INTEGER},
+      </if>
+      <if test="vuserid != null">
+        #{vuserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.po.CartCriteria" resultType="java.lang.Long">
+    select count(*) from sf_pc_cart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sf_pc_cart
+    <set>
+      <if test="record.vcid != null">
+        vCid = #{record.vcid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vgoodsid != null">
+        vGoodsId = #{record.vgoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mamount != null">
+        mAmount = #{record.mamount,jdbcType=INTEGER},
+      </if>
+      <if test="record.msummoney != null">
+        mSumMoney = #{record.msummoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.vuserid != null">
+        vUserId = #{record.vuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sf_pc_cart
+    set vCid = #{record.vcid,jdbcType=VARCHAR},
+      vGoodsId = #{record.vgoodsid,jdbcType=INTEGER},
+      mAmount = #{record.mamount,jdbcType=INTEGER},
+      mSumMoney = #{record.msummoney,jdbcType=INTEGER},
+      vUserId = #{record.vuserid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.Cart">
+    update sf_pc_cart
+    <set>
+      <if test="vgoodsid != null">
+        vGoodsId = #{vgoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="mamount != null">
+        mAmount = #{mamount,jdbcType=INTEGER},
+      </if>
+      <if test="msummoney != null">
+        mSumMoney = #{msummoney,jdbcType=INTEGER},
+      </if>
+      <if test="vuserid != null">
+        vUserId = #{vuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where vCid = #{vcid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.Cart">
+    update sf_pc_cart
+    set vGoodsId = #{vgoodsid,jdbcType=INTEGER},
+      mAmount = #{mamount,jdbcType=INTEGER},
+      mSumMoney = #{msummoney,jdbcType=INTEGER},
+      vUserId = #{vuserid,jdbcType=VARCHAR}
+    where vCid = #{vcid,jdbcType=VARCHAR}
+  </update>
+</mapper>

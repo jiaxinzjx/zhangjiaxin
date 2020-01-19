@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.po.Goods">
+    <id column="vGoodsId" jdbcType="INTEGER" property="vgoodsid" />
+    <result column="vGoodsTitle" jdbcType="VARCHAR" property="vgoodstitle" />
+    <result column="vSpec" jdbcType="VARCHAR" property="vspec" />
+    <result column="vUnit" jdbcType="VARCHAR" property="vunit" />
+    <result column="vCategoryId" jdbcType="INTEGER" property="vcategoryid" />
+    <result column="vCategoryTitle" jdbcType="VARCHAR" property="vcategorytitle" />
+    <result column="vSupplierId" jdbcType="INTEGER" property="vsupplierid" />
+    <result column="vSupplierTitle" jdbcType="VARCHAR" property="vsuppliertitle" />
+    <result column="mPriceS" jdbcType="INTEGER" property="mprices" />
+    <result column="mPriceP" jdbcType="INTEGER" property="mpricep" />
+    <result column="mCost" jdbcType="INTEGER" property="mcost" />
+    <result column="mLimit" jdbcType="INTEGER" property="mlimit" />
+    <result column="vState" jdbcType="VARCHAR" property="vstate" />
+    <result column="vProperty" jdbcType="VARCHAR" property="vproperty" />
+    <result column="vMemo" jdbcType="VARCHAR" property="vmemo" />
+    <result column="vImage" jdbcType="VARCHAR" property="vimage" />
+    <result column="vUrl" jdbcType="VARCHAR" property="vurl" />
+    <result column="mAmount" jdbcType="INTEGER" property="mamount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    vGoodsId, vGoodsTitle, vSpec, vUnit, vCategoryId, vCategoryTitle, vSupplierId, vSupplierTitle, 
+    mPriceS, mPriceP, mCost, mLimit, vState, vProperty, vMemo, vImage, vUrl, mAmount
+  </sql>
+  <select id="selectByExample" parameterType="com.example.demo.po.GoodsCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where vGoodsId = #{vgoodsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where vGoodsId = #{vgoodsid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.po.GoodsCriteria">
+    delete from goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.po.Goods">
+    insert into goods (vGoodsId, vGoodsTitle, vSpec, 
+      vUnit, vCategoryId, vCategoryTitle, 
+      vSupplierId, vSupplierTitle, mPriceS, 
+      mPriceP, mCost, mLimit, 
+      vState, vProperty, vMemo, 
+      vImage, vUrl, mAmount
+      )
+    values (#{vgoodsid,jdbcType=INTEGER}, #{vgoodstitle,jdbcType=VARCHAR}, #{vspec,jdbcType=VARCHAR}, 
+      #{vunit,jdbcType=VARCHAR}, #{vcategoryid,jdbcType=INTEGER}, #{vcategorytitle,jdbcType=VARCHAR}, 
+      #{vsupplierid,jdbcType=INTEGER}, #{vsuppliertitle,jdbcType=VARCHAR}, #{mprices,jdbcType=INTEGER}, 
+      #{mpricep,jdbcType=INTEGER}, #{mcost,jdbcType=INTEGER}, #{mlimit,jdbcType=INTEGER}, 
+      #{vstate,jdbcType=VARCHAR}, #{vproperty,jdbcType=VARCHAR}, #{vmemo,jdbcType=VARCHAR}, 
+      #{vimage,jdbcType=VARCHAR}, #{vurl,jdbcType=VARCHAR}, #{mamount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.po.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vgoodsid != null">
+        vGoodsId,
+      </if>
+      <if test="vgoodstitle != null">
+        vGoodsTitle,
+      </if>
+      <if test="vspec != null">
+        vSpec,
+      </if>
+      <if test="vunit != null">
+        vUnit,
+      </if>
+      <if test="vcategoryid != null">
+        vCategoryId,
+      </if>
+      <if test="vcategorytitle != null">
+        vCategoryTitle,
+      </if>
+      <if test="vsupplierid != null">
+        vSupplierId,
+      </if>
+      <if test="vsuppliertitle != null">
+        vSupplierTitle,
+      </if>
+      <if test="mprices != null">
+        mPriceS,
+      </if>
+      <if test="mpricep != null">
+        mPriceP,
+      </if>
+      <if test="mcost != null">
+        mCost,
+      </if>
+      <if test="mlimit != null">
+        mLimit,
+      </if>
+      <if test="vstate != null">
+        vState,
+      </if>
+      <if test="vproperty != null">
+        vProperty,
+      </if>
+      <if test="vmemo != null">
+        vMemo,
+      </if>
+      <if test="vimage != null">
+        vImage,
+      </if>
+      <if test="vurl != null">
+        vUrl,
+      </if>
+      <if test="mamount != null">
+        mAmount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vgoodsid != null">
+        #{vgoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="vgoodstitle != null">
+        #{vgoodstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="vspec != null">
+        #{vspec,jdbcType=VARCHAR},
+      </if>
+      <if test="vunit != null">
+        #{vunit,jdbcType=VARCHAR},
+      </if>
+      <if test="vcategoryid != null">
+        #{vcategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="vcategorytitle != null">
+        #{vcategorytitle,jdbcType=VARCHAR},
+      </if>
+      <if test="vsupplierid != null">
+        #{vsupplierid,jdbcType=INTEGER},
+      </if>
+      <if test="vsuppliertitle != null">
+        #{vsuppliertitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mprices != null">
+        #{mprices,jdbcType=INTEGER},
+      </if>
+      <if test="mpricep != null">
+        #{mpricep,jdbcType=INTEGER},
+      </if>
+      <if test="mcost != null">
+        #{mcost,jdbcType=INTEGER},
+      </if>
+      <if test="mlimit != null">
+        #{mlimit,jdbcType=INTEGER},
+      </if>
+      <if test="vstate != null">
+        #{vstate,jdbcType=VARCHAR},
+      </if>
+      <if test="vproperty != null">
+        #{vproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="vmemo != null">
+        #{vmemo,jdbcType=VARCHAR},
+      </if>
+      <if test="vimage != null">
+        #{vimage,jdbcType=VARCHAR},
+      </if>
+      <if test="vurl != null">
+        #{vurl,jdbcType=VARCHAR},
+      </if>
+      <if test="mamount != null">
+        #{mamount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.po.GoodsCriteria" resultType="java.lang.Long">
+    select count(*) from goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update goods
+    <set>
+      <if test="record.vgoodsid != null">
+        vGoodsId = #{record.vgoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.vgoodstitle != null">
+        vGoodsTitle = #{record.vgoodstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vspec != null">
+        vSpec = #{record.vspec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vunit != null">
+        vUnit = #{record.vunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vcategoryid != null">
+        vCategoryId = #{record.vcategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="record.vcategorytitle != null">
+        vCategoryTitle = #{record.vcategorytitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vsupplierid != null">
+        vSupplierId = #{record.vsupplierid,jdbcType=INTEGER},
+      </if>
+      <if test="record.vsuppliertitle != null">
+        vSupplierTitle = #{record.vsuppliertitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mprices != null">
+        mPriceS = #{record.mprices,jdbcType=INTEGER},
+      </if>
+      <if test="record.mpricep != null">
+        mPriceP = #{record.mpricep,jdbcType=INTEGER},
+      </if>
+      <if test="record.mcost != null">
+        mCost = #{record.mcost,jdbcType=INTEGER},
+      </if>
+      <if test="record.mlimit != null">
+        mLimit = #{record.mlimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.vstate != null">
+        vState = #{record.vstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vproperty != null">
+        vProperty = #{record.vproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vmemo != null">
+        vMemo = #{record.vmemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vimage != null">
+        vImage = #{record.vimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vurl != null">
+        vUrl = #{record.vurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mamount != null">
+        mAmount = #{record.mamount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update goods
+    set vGoodsId = #{record.vgoodsid,jdbcType=INTEGER},
+      vGoodsTitle = #{record.vgoodstitle,jdbcType=VARCHAR},
+      vSpec = #{record.vspec,jdbcType=VARCHAR},
+      vUnit = #{record.vunit,jdbcType=VARCHAR},
+      vCategoryId = #{record.vcategoryid,jdbcType=INTEGER},
+      vCategoryTitle = #{record.vcategorytitle,jdbcType=VARCHAR},
+      vSupplierId = #{record.vsupplierid,jdbcType=INTEGER},
+      vSupplierTitle = #{record.vsuppliertitle,jdbcType=VARCHAR},
+      mPriceS = #{record.mprices,jdbcType=INTEGER},
+      mPriceP = #{record.mpricep,jdbcType=INTEGER},
+      mCost = #{record.mcost,jdbcType=INTEGER},
+      mLimit = #{record.mlimit,jdbcType=INTEGER},
+      vState = #{record.vstate,jdbcType=VARCHAR},
+      vProperty = #{record.vproperty,jdbcType=VARCHAR},
+      vMemo = #{record.vmemo,jdbcType=VARCHAR},
+      vImage = #{record.vimage,jdbcType=VARCHAR},
+      vUrl = #{record.vurl,jdbcType=VARCHAR},
+      mAmount = #{record.mamount,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.Goods">
+    update goods
+    <set>
+      <if test="vgoodstitle != null">
+        vGoodsTitle = #{vgoodstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="vspec != null">
+        vSpec = #{vspec,jdbcType=VARCHAR},
+      </if>
+      <if test="vunit != null">
+        vUnit = #{vunit,jdbcType=VARCHAR},
+      </if>
+      <if test="vcategoryid != null">
+        vCategoryId = #{vcategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="vcategorytitle != null">
+        vCategoryTitle = #{vcategorytitle,jdbcType=VARCHAR},
+      </if>
+      <if test="vsupplierid != null">
+        vSupplierId = #{vsupplierid,jdbcType=INTEGER},
+      </if>
+      <if test="vsuppliertitle != null">
+        vSupplierTitle = #{vsuppliertitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mprices != null">
+        mPriceS = #{mprices,jdbcType=INTEGER},
+      </if>
+      <if test="mpricep != null">
+        mPriceP = #{mpricep,jdbcType=INTEGER},
+      </if>
+      <if test="mcost != null">
+        mCost = #{mcost,jdbcType=INTEGER},
+      </if>
+      <if test="mlimit != null">
+        mLimit = #{mlimit,jdbcType=INTEGER},
+      </if>
+      <if test="vstate != null">
+        vState = #{vstate,jdbcType=VARCHAR},
+      </if>
+      <if test="vproperty != null">
+        vProperty = #{vproperty,jdbcType=VARCHAR},
+      </if>
+      <if test="vmemo != null">
+        vMemo = #{vmemo,jdbcType=VARCHAR},
+      </if>
+      <if test="vimage != null">
+        vImage = #{vimage,jdbcType=VARCHAR},
+      </if>
+      <if test="vurl != null">
+        vUrl = #{vurl,jdbcType=VARCHAR},
+      </if>
+      <if test="mamount != null">
+        mAmount = #{mamount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where vGoodsId = #{vgoodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.Goods">
+    update goods
+    set vGoodsTitle = #{vgoodstitle,jdbcType=VARCHAR},
+      vSpec = #{vspec,jdbcType=VARCHAR},
+      vUnit = #{vunit,jdbcType=VARCHAR},
+      vCategoryId = #{vcategoryid,jdbcType=INTEGER},
+      vCategoryTitle = #{vcategorytitle,jdbcType=VARCHAR},
+      vSupplierId = #{vsupplierid,jdbcType=INTEGER},
+      vSupplierTitle = #{vsuppliertitle,jdbcType=VARCHAR},
+      mPriceS = #{mprices,jdbcType=INTEGER},
+      mPriceP = #{mpricep,jdbcType=INTEGER},
+      mCost = #{mcost,jdbcType=INTEGER},
+      mLimit = #{mlimit,jdbcType=INTEGER},
+      vState = #{vstate,jdbcType=VARCHAR},
+      vProperty = #{vproperty,jdbcType=VARCHAR},
+      vMemo = #{vmemo,jdbcType=VARCHAR},
+      vImage = #{vimage,jdbcType=VARCHAR},
+      vUrl = #{vurl,jdbcType=VARCHAR},
+      mAmount = #{mamount,jdbcType=INTEGER}
+    where vGoodsId = #{vgoodsid,jdbcType=INTEGER}
+  </update>
+</mapper>

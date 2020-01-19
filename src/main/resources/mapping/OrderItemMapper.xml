@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.OrderItemMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.po.OrderItem">
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="vOrderId" jdbcType="VARCHAR" property="vorderid" />
+    <result column="dDate" jdbcType="TIMESTAMP" property="ddate" />
+    <result column="vGoodsId" jdbcType="INTEGER" property="vgoodsid" />
+    <result column="vGoodsTitle" jdbcType="VARCHAR" property="vgoodstitle" />
+    <result column="vSpec" jdbcType="VARCHAR" property="vspec" />
+    <result column="vUnit" jdbcType="VARCHAR" property="vunit" />
+    <result column="mPrice" jdbcType="INTEGER" property="mprice" />
+    <result column="mAmount" jdbcType="INTEGER" property="mamount" />
+    <result column="mMoney" jdbcType="INTEGER" property="mmoney" />
+    <result column="vImage" jdbcType="VARCHAR" property="vimage" />
+    <result column="vSupplierId" jdbcType="INTEGER" property="vsupplierid" />
+    <result column="vSupplierTitle" jdbcType="VARCHAR" property="vsuppliertitle" />
+    <result column="vUserId" jdbcType="VARCHAR" property="vuserid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    uuid, vOrderId, dDate, vGoodsId, vGoodsTitle, vSpec, vUnit, mPrice, mAmount, mMoney, 
+    vImage, vSupplierId, vSupplierTitle, vUserId
+  </sql>
+  <select id="selectByExample" parameterType="com.example.demo.po.OrderItemCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sf_pc_order_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.example.demo.po.OrderItemCriteria">
+    delete from sf_pc_order_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.po.OrderItem">
+    insert into sf_pc_order_item (uuid, vOrderId, dDate, 
+      vGoodsId, vGoodsTitle, vSpec, 
+      vUnit, mPrice, mAmount, 
+      mMoney, vImage, vSupplierId, 
+      vSupplierTitle, vUserId)
+    values (#{uuid,jdbcType=VARCHAR}, #{vorderid,jdbcType=VARCHAR}, #{ddate,jdbcType=TIMESTAMP}, 
+      #{vgoodsid,jdbcType=INTEGER}, #{vgoodstitle,jdbcType=VARCHAR}, #{vspec,jdbcType=VARCHAR}, 
+      #{vunit,jdbcType=VARCHAR}, #{mprice,jdbcType=INTEGER}, #{mamount,jdbcType=INTEGER}, 
+      #{mmoney,jdbcType=INTEGER}, #{vimage,jdbcType=VARCHAR}, #{vsupplierid,jdbcType=INTEGER}, 
+      #{vsuppliertitle,jdbcType=VARCHAR}, #{vuserid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.po.OrderItem">
+    insert into sf_pc_order_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="vorderid != null">
+        vOrderId,
+      </if>
+      <if test="ddate != null">
+        dDate,
+      </if>
+      <if test="vgoodsid != null">
+        vGoodsId,
+      </if>
+      <if test="vgoodstitle != null">
+        vGoodsTitle,
+      </if>
+      <if test="vspec != null">
+        vSpec,
+      </if>
+      <if test="vunit != null">
+        vUnit,
+      </if>
+      <if test="mprice != null">
+        mPrice,
+      </if>
+      <if test="mamount != null">
+        mAmount,
+      </if>
+      <if test="mmoney != null">
+        mMoney,
+      </if>
+      <if test="vimage != null">
+        vImage,
+      </if>
+      <if test="vsupplierid != null">
+        vSupplierId,
+      </if>
+      <if test="vsuppliertitle != null">
+        vSupplierTitle,
+      </if>
+      <if test="vuserid != null">
+        vUserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="vorderid != null">
+        #{vorderid,jdbcType=VARCHAR},
+      </if>
+      <if test="ddate != null">
+        #{ddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vgoodsid != null">
+        #{vgoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="vgoodstitle != null">
+        #{vgoodstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="vspec != null">
+        #{vspec,jdbcType=VARCHAR},
+      </if>
+      <if test="vunit != null">
+        #{vunit,jdbcType=VARCHAR},
+      </if>
+      <if test="mprice != null">
+        #{mprice,jdbcType=INTEGER},
+      </if>
+      <if test="mamount != null">
+        #{mamount,jdbcType=INTEGER},
+      </if>
+      <if test="mmoney != null">
+        #{mmoney,jdbcType=INTEGER},
+      </if>
+      <if test="vimage != null">
+        #{vimage,jdbcType=VARCHAR},
+      </if>
+      <if test="vsupplierid != null">
+        #{vsupplierid,jdbcType=INTEGER},
+      </if>
+      <if test="vsuppliertitle != null">
+        #{vsuppliertitle,jdbcType=VARCHAR},
+      </if>
+      <if test="vuserid != null">
+        #{vuserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.po.OrderItemCriteria" resultType="java.lang.Long">
+    select count(*) from sf_pc_order_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sf_pc_order_item
+    <set>
+      <if test="record.uuid != null">
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vorderid != null">
+        vOrderId = #{record.vorderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ddate != null">
+        dDate = #{record.ddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.vgoodsid != null">
+        vGoodsId = #{record.vgoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.vgoodstitle != null">
+        vGoodsTitle = #{record.vgoodstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vspec != null">
+        vSpec = #{record.vspec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vunit != null">
+        vUnit = #{record.vunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mprice != null">
+        mPrice = #{record.mprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.mamount != null">
+        mAmount = #{record.mamount,jdbcType=INTEGER},
+      </if>
+      <if test="record.mmoney != null">
+        mMoney = #{record.mmoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.vimage != null">
+        vImage = #{record.vimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vsupplierid != null">
+        vSupplierId = #{record.vsupplierid,jdbcType=INTEGER},
+      </if>
+      <if test="record.vsuppliertitle != null">
+        vSupplierTitle = #{record.vsuppliertitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vuserid != null">
+        vUserId = #{record.vuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sf_pc_order_item
+    set uuid = #{record.uuid,jdbcType=VARCHAR},
+      vOrderId = #{record.vorderid,jdbcType=VARCHAR},
+      dDate = #{record.ddate,jdbcType=TIMESTAMP},
+      vGoodsId = #{record.vgoodsid,jdbcType=INTEGER},
+      vGoodsTitle = #{record.vgoodstitle,jdbcType=VARCHAR},
+      vSpec = #{record.vspec,jdbcType=VARCHAR},
+      vUnit = #{record.vunit,jdbcType=VARCHAR},
+      mPrice = #{record.mprice,jdbcType=INTEGER},
+      mAmount = #{record.mamount,jdbcType=INTEGER},
+      mMoney = #{record.mmoney,jdbcType=INTEGER},
+      vImage = #{record.vimage,jdbcType=VARCHAR},
+      vSupplierId = #{record.vsupplierid,jdbcType=INTEGER},
+      vSupplierTitle = #{record.vsuppliertitle,jdbcType=VARCHAR},
+      vUserId = #{record.vuserid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
